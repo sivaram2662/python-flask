@@ -1,3 +1,4 @@
+bucket = "${params.bucket-name}"
 pipeline{
 agent any 
 stages{
@@ -6,8 +7,8 @@ stages{
         steps{
             script {
         sh """
-            echo hello
-            aws s3 cp static-websites/*  s3://static-website-hosting-devops/
+            echo ${bucket}
+            aws s3 cp static-websites/*  s3://${bucket}/
         """
             }
         }
