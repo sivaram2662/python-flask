@@ -1,29 +1,17 @@
-pipeline {
-
-    agent any
-
-    stages {
-        stage('SCM-CHECKOUT') {
-            steps {
-                echo '$tag'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                echo 'Hello World'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Hello World'
-            }
-        }
-        stage('Sanity-Test') {
-            steps {
-                echo 'Hello World'
+pipeline{
+agent any 
+stages{
+    stage("deploy-to-s3")
+    {
+        steps{
+            script {
+        sh """
+            echo hello
+            aws s3 cp static-websites/*  s3://static-website-hosting-devops/
+        """
             }
         }
     }
+}
+
 }
