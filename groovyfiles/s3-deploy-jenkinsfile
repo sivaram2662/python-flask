@@ -1,35 +1,17 @@
-pipeline {
-    agent any
-    stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/sivaram2662/python-flask.git'
+pipeline{
+agent any 
+stages{
+    stage("deploy-to-s3")
+    {
+        steps{
+            script {
+        sh """
+            echo hello
+            aws s3 cp static-websites/*  s3://static-website-hosting-devops/
+        """
             }
         }
-
-        stage("static-webhosting-deploy"){
-            steps{
-                <!-- sh "aws s3 cp * s3://bucketname/"
-                sh "echo "deployment completed""
-                sh "aws s3 ls s3://bucketname/" -->
-                script {
-
-                    sh """ 
-                 aws s3 cp * s3://bucketname/
-                 echo "deployment completed"
-                 aws s3 ls s3://bucketname
-                    
-                    """
-                }
-            }
-
-        }
-
     }
-    post { 
-        failure { 
-            emailext body: 'job is completed', subject: 'jobs-status', to: 'test@gmail.com'
-        }
-        deleteDir() 
-    }
+}
+
 }
